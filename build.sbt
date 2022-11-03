@@ -6,5 +6,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "scala-oop"
   )
-libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.11"
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.11" % "test"
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.14"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % "test"
+libraryDependencies += "com.softwaremill.quicklens" %% "quicklens" % "1.9.0"
+libraryDependencies += "org.typelevel" %% "cats-core" % "2.8.0"

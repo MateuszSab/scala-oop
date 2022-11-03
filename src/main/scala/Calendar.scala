@@ -1,46 +1,14 @@
-class Calendar {
+case class Calendar(daysInAYear: Seq[Day]) {
 
-  var listOfDays = List.empty[Day]
-
-  def show = {
-    println("days with assignment " + s"$listOfDays")
-    true
+  def chooseADay(num: Int, month: String): Option[Day] = {
+    daysInAYear.find(d => d.num == num && d.month == month)
   }
 
-  def add(day: Day*) = {
-    listOfDays = listOfDays ++ day
-    true
-
+  def daysWithTasks(): Unit = {
+    println(daysInAYear.find(d => d.listOfTasks.nonEmpty))
   }
 }
-  case class Day(num: Int, month: String, year: Int) {
-    val day = num
-    val Month = month
-    val Year = year
 
-    var listOfTasks = List.empty[Task]
 
-    def show = {
-      println("assigned tasks: " + s"$listOfTasks")
-      true
-    }
 
-    def add(task: Task*) = {
-      listOfTasks = listOfTasks ++ task
-      true
 
-    }
-  }
-
-  case class Task(title: String, when: (Int, Int)) {
-
-    def show = {
-      println("what to do and when: " + s"$whatToDo " + "from " + s"${whenToDo._1} " + "to " + s"${whenToDo._2}")
-      true
-    }
-
-    val whatToDo = title
-
-    val whenToDo = when
-
-  }
