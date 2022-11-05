@@ -1,3 +1,4 @@
+import Main.myCalendar
 import cats.data.State
 
 import java.text.SimpleDateFormat
@@ -10,11 +11,7 @@ object CalendarUtils {
   val listOfMonths31 = Seq("January", "March", "May", "July", "August", "October", "December")
   val listOfMonths30 = Seq("April", "June", "September", "November")
 
-  def showPrompt(): Unit = {
-    print("\n(a)dd task, (s)ee existing tasks, or (q)uit: ")
-  }
 
-  //  def getUserInput(): String = readLine.trim
 
 
   def overlappingOfDates(task1: Task, task2: Task): Boolean = {
@@ -30,6 +27,18 @@ object CalendarUtils {
     val replaceDay: Seq[Day] = c.daysInAYear.map(d => if (d.num == dayNum && d.month == month) Day(dayNum, month, d.listOfTasks :+ task) else d)
     val newCalendar = c.copy(daysInAYear = replaceDay)
     (newCalendar, newCalendar.daysInAYear)
+  }
+
+  @tailrec
+  def getRightDecision(): String = {
+    val d = readLine("(a)dd task, (s)ee existing tasks, or (q)uit: ").toLowerCase
+    if (d =="a") "a"
+    else if (d == "s") "s"
+    else if (d == "q") "q"
+    else {
+      println("wrong decision try again")
+      getRightDecision()
+    }
   }
 
   @tailrec
@@ -54,19 +63,19 @@ object CalendarUtils {
     }
   }
   @tailrec
-  def getRightDate(): String = {
+  def getRightEnd(): String = {
     val format = new SimpleDateFormat("HH:mm")
     val d = readLine("choose the end of a task (HH:mm): ")
     try
     {
       format.parse(d)
-       d
+      d
     }
     catch
       {
         case _ : java.text.ParseException =>
           println("wrong hour format, try again")
-          getRightDate()
+          getRightEnd()
       }
   }
 
@@ -93,7 +102,7 @@ object CalendarUtils {
     val day = getRightDay()
     val taskName = readLine("choose task's name: ")
     val beginning = getRightBeginning()
-    val end = getRightDate()
+    val end = getRightEnd()
 
     val takeDay = c.chooseADay(day, month).get
     val task = Task(taskName, beginning, end)
@@ -105,4 +114,11 @@ object CalendarUtils {
       getData(c)
     }
   }
+
+  def updateCalendar(mc: Calendar): Calendar = {
+    val data = getData(mc)
+    val adDay = add(data._1, data._2, data._3).run(mc)
+    adDay.value._1
+  }
+
 }
