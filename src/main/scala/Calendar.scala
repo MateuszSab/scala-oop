@@ -4,8 +4,13 @@ case class Calendar(daysInAYear: Seq[Day]) {
     daysInAYear.find(d => d.num == num && d.month == month)
   }
 
-  def daysWithTasks(): Unit = {
-    println(daysInAYear.find(d => d.listOfTasks.nonEmpty))
+  def daysWithTasks(): Seq[Day] = {
+    daysInAYear.filter(d => d.listOfTasks.nonEmpty)
+  }
+
+  def show(): Unit = {
+    println("what to do and when: ")
+    daysWithTasks().foreach(println)
   }
 }
 

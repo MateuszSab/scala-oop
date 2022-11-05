@@ -19,7 +19,7 @@ object Main extends App {
         main(newCalendar)
 
       case "s" =>
-        c.daysWithTasks()
+        c.show()
         main(c)
 
       case "q" => println("Good Bye!")

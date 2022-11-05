@@ -1,6 +1,4 @@
-import Main.myCalendar
 import cats.data.State
-
 import java.text.SimpleDateFormat
 import scala.annotation.tailrec
 import scala.math.Ordered.orderingToOrdered
@@ -10,9 +8,6 @@ object CalendarUtils {
 
   val listOfMonths31 = Seq("January", "March", "May", "July", "August", "October", "December")
   val listOfMonths30 = Seq("April", "June", "September", "November")
-
-
-
 
   def overlappingOfDates(task1: Task, task2: Task): Boolean = {
     val equal = task1.start == task2.start && task1.end == task2.end

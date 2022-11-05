@@ -1,7 +1,9 @@
 case class Day(num: Int, month: String, listOfTasks: List[Task] = List.empty[Task]) {
 
-  def show = {
+  def show(): Unit = {
     println("assigned tasks: " + s"$listOfTasks")
-    true
   }
+
+  override def toString: String = s"$num $month: " + s"${listOfTasks.mkString(",")}"
+
 }

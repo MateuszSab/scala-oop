@@ -30,13 +30,16 @@ class CalendarSpec extends AnyFlatSpec with should.Matchers {
     val workout = Task("workout", "15:00", "16:00")
     val adDay: State[Calendar, Seq[Day]] = for {
       _ <- add(3, "May", study)
-      updated <- add(3, "May", workout)
+      updated <- add(4, "May", workout)
     } yield updated
 
     val newCalendar = adDay.run(myCalendar).value._1
     val thirdOfMay = newCalendar.chooseADay(3, "May")
+    val fourthOfMay = newCalendar.chooseADay(4, "May")
+    println(newCalendar.daysWithTasks())
 
-    thirdOfMay.get.listOfTasks shouldBe List(Task("study","13:00", "15:00"), Task("workout", "15:00", "16:00"))
+//    thirdOfMay.get.listOfTasks shouldBe List(Task("study","13:00", "15:00"), Task("workout", "15:00", "16:00"))
+    thirdOfMay.get.listOfTasks shouldBe List(Task("study","13:00", "15:00"))
   }
 
 }

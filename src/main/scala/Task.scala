@@ -11,6 +11,6 @@ case class Task(title: String, beginning: String, ending: String) {
   }
 
   override def toString: String =
-    "what to do and when: " + s"$title " + "from " + s"${beginning} " + "to " + s"${ending}"
+    s"$title " + "from " + s"${beginning} " + "to " + s"${ending}"
 
 }
