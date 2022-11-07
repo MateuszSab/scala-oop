@@ -8,6 +8,8 @@ object CalendarUtils {
 
   val listOfMonths31 = Seq("January", "March", "May", "July", "August", "October", "December")
   val listOfMonths30 = Seq("April", "June", "September", "November")
+  val listOfMonths29 = Seq("February")
+  val monthsNames: Seq[String] = listOfMonths31 ++ listOfMonths29 ++ listOfMonths30
 
   def overlappingOfDates(task1: Task, task2: Task): Boolean = {
     val equal = task1.start == task2.start && task1.end == task2.end
@@ -39,7 +41,7 @@ object CalendarUtils {
   @tailrec
   def getRightMoth(): String = {
     val m = readLine("choose month: ").capitalize
-    if (listOfMonths31.contains(m) || listOfMonths30.contains(m)) {
+    if (monthsNames.contains(m)) {
       m
     } else {
       println("wrong month choose again")
@@ -48,13 +50,14 @@ object CalendarUtils {
   }
 
   @tailrec
-  def getRightDay(): Int = {
+  def getRightDay(implicit month: String): Int = {
     val d = readLine("choose a day: ").toInt
-    if (d >= 1 && d <= 31) {
-      d
-    } else {
+    if (listOfMonths29.contains(month) && d <= 29 && d >= 1) d
+    else if (listOfMonths30.contains(month) && d <= 30 && d >= 1) d
+    else if (listOfMonths31.contains(month) && d <= 31 && d >= 1)  d
+    else {
       println("wrong day number, choose again")
-      getRightDay()
+      getRightDay(month)
     }
   }
   @tailrec
@@ -93,8 +96,8 @@ object CalendarUtils {
 
   @tailrec
   def getData(c: Calendar): (Int, String, Task) = {
-    val month: String = getRightMoth()
-    val day = getRightDay()
+    implicit val month: String = getRightMoth()
+    val day = getRightDay(month)
     val taskName = readLine("choose task's name: ")
     val beginning = getRightBeginning()
     val end = getRightEnd()
